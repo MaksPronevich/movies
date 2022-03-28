@@ -18,16 +18,24 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=star`)
+		fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=star`)
 			.then(response => response.json())
-			.then(result => this.setState({ data: result.Search, loading: false }));
+			.then(result => this.setState({ data: result.Search, loading: false }))
+			.catch(err => {
+				console.error(err);
+				this.setState({ loading: false });
+			});
 	}
 
 	searchMovies(query, category) {
 		this.setState({ loading: true });
-		fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}${category !== 'all' ? `&type=${category}` : ''}`)
+		fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}${category !== 'all' ? `&type=${category}` : ''}`)
 			.then(response => response.json())
-			.then(result => this.setState({ data: result.Search, loading: false }));
+			.then(result => this.setState({ data: result.Search, loading: false }))
+			.catch(err => {
+				console.error(err);
+				this.setState({ loading: false });
+			});
 	}
 
 	render() {
